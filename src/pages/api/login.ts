@@ -20,7 +20,6 @@ export default withIronSessionApiRoute(
     })
 
     if (!foundUser[0]) {
-      console.log('Account not found')
       return res.status(401).json({
         message: 'Account not found, create account first.'
       })
@@ -33,9 +32,14 @@ export default withIronSessionApiRoute(
     const matchedPassword = await bcrypt.compare(password, userHashPassword)
 
     if (!matchedPassword) {
-      console.log('Wrong password')
       return res.status(401).json({
         message: 'Password is incorrect!'
+      })
+    }
+
+    if (accountType !== 'ADMIN') {
+      return res.status(401).json({
+        message: 'Only administrator is allowed!'
       })
     }
 
