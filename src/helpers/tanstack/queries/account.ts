@@ -8,6 +8,7 @@ export const useGetAccount = () => {
       return account.data
     },
     {
+      cacheTime: 0,
       onError: (error: any) => {
         console.error('ERROR ACCOUNT', error.response.data)
       }
