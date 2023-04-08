@@ -62,7 +62,7 @@ const Profile: NextPage<IProps> = ({ cookies }) => {
             <h3 className="text-base text-olive">{ account.address }</h3>
           </div>
           <Link
-            href=""
+            href="/edit"
             className="w-[10rem] px-3 py-2 rounded-full text-center text-white bg-olive transition ease-in-out duration-200 hover:bg-opacity-50"
           >
             Edit Account
