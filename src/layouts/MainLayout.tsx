@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Toaster } from 'react-hot-toast'
 import { useLogoutMutation } from '@/helpers/tanstack/mutations/auth'
 
 interface IProps {
@@ -20,6 +21,10 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
 
   return (
     <div className="relative flex flex-col w-full h-screen overflow-hidden font-poppins">
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       <div className="flex flex-row items-center justify-between w-full px-5 py-1 border-b border-green-600 bg-olive-light">
         <Link href="/" className="flex flex-row items-center w-full">
           <Image

@@ -30,7 +30,12 @@ const Login: NextPage<IProps> = ({ cookies }) => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
+
+    if (email === '') return setError('Email is required')
+    if (password === '') return setError('Password is required')
+
     setIsLoading(true)
+    
     await loginMutation.mutateAsync({
       email,
       password
