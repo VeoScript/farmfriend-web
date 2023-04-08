@@ -1,19 +1,49 @@
 import React from 'react'
+import nookies from 'nookies'
 import Head from 'next/head'
 import Image from 'next/image'
 import MainLayout from '@/layouts/MainLayout'
+import { GetServerSidePropsContext, NextPage } from 'next'
+import { useLoginMutation } from '@/helpers/tanstack/mutations/auth'
 
-const Login = () => {
+interface IProps {
+  cookies: any
+}
 
+const Login: NextPage<IProps> = ({ cookies }) => {
+
+  const loginMutation = useLoginMutation()
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [error, setError] = React.useState<string>('')
   const [email, setEmail] = React.useState<string>('')
   const [password, setPassword] = React.useState<string>('')
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setIsLoading(true)
+    await loginMutation.mutateAsync({
+      email,
+      password
+    },
+    {
+      onError: (error: any) => {
+        setIsLoading(false)
+        setError(error.response.data.message)
+      },
+      onSuccess: () => {
+        setIsLoading(false)
+        console.log('Logged in successfully')
+      }
+    })
+  }
 
   return (
     <>
       <Head>
         <title>FarmFriend</title>
       </Head>
-      <MainLayout>
+      <MainLayout cookies={cookies}>
         <div className="flex flex-row items-center justify-between w-full max-w-6xl h-full space-x-20">
           <div className="flex flex-row items-center w-full">
             <Image
@@ -36,16 +66,25 @@ const Login = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col items-center w-full max-w-sm space-y-5">
+          <form onSubmit={handleLogin} className="flex flex-col items-center w-full max-w-sm space-y-5">
             <h2 className="font-bold text-2xl text-olive">Welcome Back!</h2>
+            {error && (
+              <div className="flex flex-row items-center justify-center w-full p-3 rounded-xl bg-red-500 bg-opacity-50">
+                <h3 className="font-thin text-sm text-white">{ error }</h3>
+              </div>
+            )}
             <div className="flex flex-col w-full space-y-2">
               <label htmlFor="email" className="ml-3 text-sm text-neutral-400">Email</label>
               <input
                 id="email"
                 type="email"
+                disabled={isLoading}
                 className="outline-none w-full px-3 py-2 rounded-full bg-neutral-200"
                 value={email}
-                onChange={(e: React.FormEvent<HTMLInputElement>) => setEmail(e.currentTarget.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                  setEmail(e.currentTarget.value)
+                  setError('')
+                }}
               />
             </div>
             <div className="flex flex-col w-full space-y-2">
@@ -53,21 +92,37 @@ const Login = () => {
               <input
                 id="password"
                 type="password"
+                disabled={isLoading}
                 className="outline-none w-full px-3 py-2 rounded-full bg-neutral-200"
                 value={password}
-                onChange={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
+                onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                  setPassword(e.currentTarget.value)
+                  setError('')
+                }}
               />
             </div>
             <button
-              className="outline-none w-full px-3 py-2 rounded-full text-white bg-olive transition ease-in-out duration-200 hover:bg-opacity-50"
+              disabled={isLoading}
+              type="submit"
+              className={`outline-none w-full px-3 py-2 rounded-full text-white bg-olive transition ease-in-out duration-200 hover:bg-opacity-50 ${isLoading ? 'opacity-50' : 'opacity-100'}`}
+              onClick={handleLogin}
             >
-              Log in
+              {isLoading ? 'Loading...' : 'Log in'}
             </button>
-          </div>
+          </form>
         </div>
       </MainLayout>
     </>
   )
+}
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  const cookies  = nookies.get(ctx)
+  return {
+    props: {
+      cookies
+    }
+  }
 }
 
 export default Login

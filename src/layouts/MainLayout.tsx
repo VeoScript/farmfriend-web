@@ -1,14 +1,26 @@
 import React from 'react'
+import Router from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 
 interface IProps {
+  cookies: any
   children: React.ReactNode
 }
 
 type MainLayoutProps = (props: IProps) => JSX.Element
 
-const MainLayout: MainLayoutProps = ({ children }) => {
+const MainLayout: MainLayoutProps = ({ cookies, children }) => {
+
+  // check if the user is already logged in...
+  React.useEffect(() => {
+    if (cookies['farmfriend']) {
+      Router.replace('/')
+    } else {
+      Router.replace('/login')
+    }
+  }, [cookies])
+
   return (
     <div className="relative flex flex-col w-full h-screen overflow-hidden font-poppins">
       <div className="flex flex-row items-center justify-between w-full px-5 py-1 border-b border-green-600 bg-olive-light">
