@@ -1,25 +1,21 @@
 import React from 'react'
-import Router from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useLogoutMutation } from '@/helpers/tanstack/mutations/auth'
 
 interface IProps {
-  cookies: any
   children: React.ReactNode
 }
 
 type MainLayoutProps = (props: IProps) => JSX.Element
 
-const MainLayout: MainLayoutProps = ({ cookies, children }) => {
+const MainLayout: MainLayoutProps = ({ children }) => {
 
-  // check if the user is already logged in...
-  React.useEffect(() => {
-    if (cookies['farmfriend']) {
-      Router.replace('/')
-    } else {
-      Router.replace('/login')
-    }
-  }, [cookies])
+  const logoutMutation = useLogoutMutation()
+
+  const handleLogout = async () => {
+    await logoutMutation.mutateAsync()
+  }
 
   return (
     <div className="relative flex flex-col w-full h-screen overflow-hidden font-poppins">
@@ -39,20 +35,24 @@ const MainLayout: MainLayoutProps = ({ cookies, children }) => {
         </Link>
         <div className="flex flex-row items-center justify-end w-full space-x-2">
           <Link href="/" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
-            Home
-          </Link>
-          <Link href="/" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
             Profile
           </Link>
-          <Link href="/" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
+          <Link href="/Monitoring" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
+            Monitoring
+          </Link>
+          <Link href="/about" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
             About Us
           </Link>
-          <Link href="/" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
+          <button 
+            type="button"
+            className="px-3 py-1 outline-none rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50"
+            onClick={handleLogout}
+          >
             Log out
-          </Link>
+          </button>
         </div>
       </div>
-      <div className="flex flex-col items-center w-full h-full overflow-auto">
+      <div className="flex flex-col items-center w-full h-full overflow-x-hidden overflow-y-auto">
         { children }
       </div>
       <div className="flex flex-row items-center justify-between w-full px-10 py-5 overflow-hidden text-white border-t border-green-600 bg-olive-light">

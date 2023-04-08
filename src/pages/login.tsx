@@ -1,6 +1,7 @@
 import React from 'react'
 import nookies from 'nookies'
 import Head from 'next/head'
+import Router from 'next/router'
 import Image from 'next/image'
 import MainLayout from '@/layouts/MainLayout'
 import { GetServerSidePropsContext, NextPage } from 'next'
@@ -19,6 +20,13 @@ const Login: NextPage<IProps> = ({ cookies }) => {
   const [email, setEmail] = React.useState<string>('')
   const [password, setPassword] = React.useState<string>('')
 
+  // check if the user is already logged in...
+  React.useEffect(() => {
+    if (cookies['farmfriend']) {
+      Router.replace('/')
+    } 
+  }, [cookies])
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement> | React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setIsLoading(true)
@@ -29,7 +37,7 @@ const Login: NextPage<IProps> = ({ cookies }) => {
     {
       onError: (error: any) => {
         setIsLoading(false)
-        setError(error.response.data.message)
+        setError(error.response?.data?.message)
       },
       onSuccess: () => {
         setIsLoading(false)
@@ -43,7 +51,7 @@ const Login: NextPage<IProps> = ({ cookies }) => {
       <Head>
         <title>FarmFriend</title>
       </Head>
-      <MainLayout cookies={cookies}>
+      <MainLayout>
         <div className="flex flex-row items-center justify-between w-full max-w-6xl h-full space-x-20">
           <div className="flex flex-row items-center w-full">
             <Image
@@ -57,6 +65,7 @@ const Login: NextPage<IProps> = ({ cookies }) => {
               placeholder="blur"
             />
             <div className="flex flex-col w-full space-y-3">
+              <h2 className="font-bold text-2xl text-olive">A weather support application for farmers.</h2>
               <h3 className="text-lg text-olive">Growing Stronger Together: Supporting Agriculture for a Sustainable Future.</h3>
               <button className="flex flex-row items-center justify-center w-[18rem] px-5 py-3 space-x-3 rounded-xl bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
                 <span className="text-sm">Download the app for Android</span>
