@@ -4,12 +4,13 @@ import Image from 'next/image'
 import { useLogoutMutation } from '@/helpers/tanstack/mutations/auth'
 
 interface IProps {
+  account?: any
   children: React.ReactNode
 }
 
 type MainLayoutProps = (props: IProps) => JSX.Element
 
-const MainLayout: MainLayoutProps = ({ children }) => {
+const MainLayout: MainLayoutProps = ({ account, children }) => {
 
   const logoutMutation = useLogoutMutation()
 
@@ -34,22 +35,28 @@ const MainLayout: MainLayoutProps = ({ children }) => {
           <h2 className="font-bold text-base text-yellow-green uppercase">FarmFriend</h2>
         </Link>
         <div className="flex flex-row items-center justify-end w-full space-x-2">
-          <Link href="/" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
-            Profile
-          </Link>
-          <Link href="/Monitoring" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
-            Monitoring
-          </Link>
+          {account && (
+            <>
+              <Link href="/" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
+                Profile
+              </Link>
+              <Link href="/Monitoring" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
+                Monitoring
+              </Link>
+            </>
+          )}
           <Link href="/about" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
             About Us
           </Link>
-          <button 
-            type="button"
-            className="px-3 py-1 outline-none rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50"
-            onClick={handleLogout}
-          >
-            Log out
-          </button>
+          {account && (
+            <button 
+              type="button"
+              className="px-3 py-1 outline-none rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50"
+              onClick={handleLogout}
+            >
+              Log out
+            </button>
+          )}
         </div>
       </div>
       <div className="flex flex-col items-center w-full h-full overflow-x-hidden overflow-y-auto">
