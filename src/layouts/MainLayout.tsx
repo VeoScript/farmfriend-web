@@ -40,7 +40,7 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
               <Link href="/" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
                 Profile
               </Link>
-              <Link href="/Monitoring" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
+              <Link href="/monitoring" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
                 Monitoring
               </Link>
             </>
