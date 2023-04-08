@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import api from '../../../config/Axios'
+import axios from 'axios'
 
 export const useGetAccount = () => {
   return useQuery(['account'],
     async () => {
-      const account = await api.get('/api/user')
+      const account = await axios.get('/api/user')
       return account.data
     },
     {

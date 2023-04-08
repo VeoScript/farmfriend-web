@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id                    String              @id                         @default(cuid())
+  account_type          AccountType                                     @default(ADMIN)
+  image                 String?             @db.LongText
+  first_name            String              @db.MediumText
+  last_name             String              @db.MediumText
+  address               String              @db.LongText
+  contact_num           String
+  email                 String
+  password              String
+  created_at            DateTime            @db.DateTime(6)             @default(now())
+  updated_at            DateTime            @db.DateTime(6)             @default(now())
+  crops                 Crops[]
+  programs              Program[]
+  reports               Report[]
+  rates                 Rates[]
+  notifications         Notification[]
+}
+
+model Crops {
+  id                    String              @id                         @default(cuid())
+  image                 String              @db.LongText
+  name                  String              @db.MediumText
+  description           String              @db.LongText
+  temperature           String        
+  created_at            DateTime            @db.DateTime(6)             @default(now())
+  updated_at            DateTime            @db.DateTime(6)             @default(now())
+  user                  User                                            @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id               String
+
+  @@index([user_id])
+}
+
+model Program {
+  id                    String              @id                         @default(cuid())
+  title                 String              @db.MediumText
+  description           String              @db.LongText
+  created_at            DateTime            @db.DateTime(6)             @default(now())
+  updated_at            DateTime            @db.DateTime(6)             @default(now())
+  user                  User                                            @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id               String
+
+  @@index([user_id])
+}
+
+model Report {
+  id                    String              @id                         @default(cuid())
+  type                  ReportType
+  description           String              @db.LongText
+  created_at            DateTime            @db.DateTime(6)             @default(now())
+  updated_at            DateTime            @db.DateTime(6)             @default(now())
+  user                  User                                            @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id               String
+
+  @@index([user_id])
+}
+
+model Rates {
+  id                    String              @id                         @default(cuid())
+  rate                  Float
+  feedback              String?             @db.LongText
+  created_at            DateTime            @db.DateTime(6)             @default(now())
+  updated_at            DateTime            @db.DateTime(6)             @default(now())
+  user                  User                                            @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id               String
+
+  @@index([user_id])
+}
+
+model Notification {
+  id                    String              @id                         @default(cuid())
+  type                  NotificationType
+  read                  Boolean                                         @default(false)
+  message               String              @db.LongText
+  routeId               String
+  created_at            DateTime            @db.DateTime(6)             @default(now())
+  updated_at            DateTime            @db.DateTime(6)             @default(now())
+  notification_from     User?                                           @relation(fields: [notification_from_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  notification_from_id  String
+  notification_to       NotificationAccountType
+
+  @@index([notification_from_id])
+}
+
+enum AccountType {
+  ADMIN
+  FARMERS
+  LGU_NGO
+}
+
+enum ReportType {
+  FARMERS
+  LGU_NGO
+}
+
+enum NotificationAccountType {
+  ALL
+  ADMIN
+  FARMERS
+  LGU_NGO
+}
+
+enum NotificationType {
+  ADD_CROPS
+  ADD_PROGRAMS
+  ADD_REPORTS
+}

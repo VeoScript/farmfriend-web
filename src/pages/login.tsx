@@ -22,7 +22,7 @@ const Login: NextPage<IProps> = ({ cookies }) => {
 
   // check if the user is already logged in...
   React.useEffect(() => {
-    if (cookies['farmfriend']) {
+    if (cookies['farmfriend_web']) {
       Router.replace('/')
     } 
   }, [cookies])

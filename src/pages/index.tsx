@@ -20,7 +20,7 @@ const Profile: NextPage<IProps> = ({ cookies }) => {
 
   // check if the user is not logged in...
   React.useEffect(() => {
-    if (!cookies['farmfriend']) {
+    if (!cookies['farmfriend_web']) {
       Router.replace('/login')
     }
   }, [cookies])
@@ -33,7 +33,7 @@ const Profile: NextPage<IProps> = ({ cookies }) => {
       <Head>
         <title>FarmFriend (Home)</title>
       </Head>
-      <MainLayout>
+      <MainLayout account={account}>
         <div className="flex flex-col items-center w-full py-10 space-y-5">
           <div className="flex flex-col items-center w-full">
             {account.image
