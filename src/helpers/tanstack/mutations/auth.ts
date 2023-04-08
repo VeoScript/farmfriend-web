@@ -14,7 +14,7 @@ export const useLoginMutation = () => {
         console.error('ERROR LOGIN', error.response.data)
       },
       onSuccess: async (data: any) => {
-        queryClient.invalidateQueries(['user'])
+        queryClient.invalidateQueries(['account'])
         Router.push('/')
       }
     }
@@ -30,7 +30,7 @@ export const useLogoutMutation = () => {
         console.error('ERROR LOGOUT', error.response.data)
       },
       onSuccess: async () => {
-        queryClient.invalidateQueries(['user'])
+        queryClient.invalidateQueries(['account'])
         Router.push('/login')
       }
     }
