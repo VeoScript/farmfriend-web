@@ -14,7 +14,7 @@ export const useLoginMutation = () => {
         console.error('ERROR LOGIN', error.response.data)
       },
       onSuccess: async () => {
-        queryClient.invalidateQueries(['account'])
+        queryClient.resetQueries()
         Router.push('/')
       }
     }
