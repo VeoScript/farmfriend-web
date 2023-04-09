@@ -81,7 +81,7 @@ const Login: NextPage<IProps> = ({ cookies }) => {
               </Link>
             </div>
           </div>
-          <form onSubmit={handleLogin} className="flex flex-col items-center w-full max-w-sm py-5 md:py-0 space-y-5">
+          <form onSubmit={handleLogin} className="flex flex-col items-center w-full max-w-sm px-3 md:px-0 py-5 md:py-0 space-y-5">
             <h2 className="font-bold text-xl md:text-2xl text-olive">Welcome Back!</h2>
             {error && (
               <div className="flex flex-row items-center justify-center w-full p-3 rounded-xl bg-red-500 bg-opacity-50">
