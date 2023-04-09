@@ -23,7 +23,7 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
   }
 
   return (
-    <div className="relative flex flex-col w-full h-screen overflow-hidden font-poppins">
+    <div className="relative flex flex-col w-full h-full md:h-screen overflow-y-auto md:overflow-hidden font-poppins">
       <Toaster
         position="top-center"
         reverseOrder={false}
@@ -77,16 +77,16 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
           )}
         </div>
       </div>
-      <div className="flex flex-col items-center w-full h-full overflow-x-hidden overflow-y-auto">
+      <div className="flex flex-col items-center w-full h-full overflow-hidden md:overflow-x-hidden md:overflow-y-auto">
         { children }
       </div>
-      <div className="flex flex-row items-center justify-between w-full px-10 py-5 overflow-hidden text-white border-t border-green-600 bg-olive-light">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-start md:justify-between w-full px-10 py-5 space-y-3 md:space-y-0 overflow-hidden text-white border-t border-green-600 bg-olive-light">
         <div className="flex flex-col items-start w-full">
           <h2 className="font-bold text-xl text-yellow-green">FARMFRIEND</h2>
           <h6 className="font-light text-xs">2022 © FARMFRIEND</h6>
           <h6 className="font-light text-xs">All rights reserved.</h6>
         </div>
-        <div className="flex flex-col items-center w-full">
+        <div className="flex flex-col items-start md:items-center w-full">
           <div className="flex flex-col">
             <Link href="https://www.da.gov.ph/" target="_blank" className="text-sm hover:underline">
               Department of Agriculture
@@ -96,7 +96,7 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col items-end w-full">
+        <div className="flex flex-col items-start md:items-end w-full">
           <Link href="/" className="text-sm hover:underline">
             Privacy Policy
           </Link>
