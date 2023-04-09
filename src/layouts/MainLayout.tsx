@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { Toaster } from 'react-hot-toast'
 import { useLogoutMutation } from '@/helpers/tanstack/mutations/auth'
 
@@ -12,6 +13,8 @@ interface IProps {
 type MainLayoutProps = (props: IProps) => JSX.Element
 
 const MainLayout: MainLayoutProps = ({ account, children }) => {
+
+  const router = useRouter()
 
   const logoutMutation = useLogoutMutation()
 
@@ -50,9 +53,19 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
               </Link>
             </>
           )}
-          <Link href="/about" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
-            About Us
-          </Link>
+          <button
+            type="button"
+            className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50"
+            onClick={() => {
+              if (router.pathname === '/about') {
+                router.back()
+              } else {
+                router.push('/about')
+              }
+            }}
+          >
+            {router.pathname === '/about' ? 'Back' : 'About Us'}
+          </button>
           {account && (
             <button 
               type="button"
