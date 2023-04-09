@@ -17,7 +17,7 @@ const About = () => {
             By combining our strengths, supporting each other through our weaknesses, and celebrating our successes as a team, we can reach new heights and conquer any challenge that comes our way.
             So let's roll up our sleeves, put our heads together, and show the world what we're capable of when we work as one!"`}
           </p>
-          <div className="flex flex-row items-center w-full space-x-5">
+          <div className="flex flex-col md:flex-row items-center w-full space-x-0 md:space-x-5 space-y-3 md:space-y-0">
             <div className="flex flex-col items-center w-full p-5 shadow-xl rounded-xl border border-olive-semi-light bg-yellow-green bg-opacity-50">
               <Image
                 src={'/images/farmfriend-logo.png'}
