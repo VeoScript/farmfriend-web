@@ -45,10 +45,10 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
         <div className="flex flex-row items-center justify-end w-full space-x-2">
           {account && (
             <>
-              <Link href="/" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
+              <Link href="/" className={`px-3 py-1 rounded-xl text-sm transition ease-in-out duration-200 ${ router.pathname === '/' ? 'bg-green-200' : 'bg-yellow-green' } hover:bg-opacity-50`}>
                 Profile
               </Link>
-              <Link href="/monitoring" className="px-3 py-1 rounded-xl text-sm bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
+              <Link href="/monitoring" className={`px-3 py-1 rounded-xl text-sm transition ease-in-out duration-200 ${ router.pathname === '/monitoring' ? 'bg-green-200' : 'bg-yellow-green' } hover:bg-opacity-50`}>
                 Monitoring
               </Link>
             </>
