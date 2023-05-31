@@ -7,7 +7,7 @@ export default withIronSessionApiRoute(
   async function handler(req: any, res: NextApiResponse) {
     const { email, password } = req.body
   
-    const foundUser = await prisma.user.findUnique({
+    const foundUser = await prisma.user.findMany({
       where: {
         email: email
       },
@@ -19,15 +19,15 @@ export default withIronSessionApiRoute(
       }
     })
 
-    if (!foundUser) {
+    if (!foundUser[0]) {
       return res.status(401).json({
         message: 'Account not found, create account first.'
       })
     }
 
-    const userId = foundUser.id
-    const accountType = foundUser.account_type
-    const userHashPassword = foundUser.password
+    const userId = foundUser[0].id
+    const accountType = foundUser[0].account_type
+    const userHashPassword = foundUser[0].password
 
     const matchedPassword = await bcrypt.compare(password, userHashPassword)
 
