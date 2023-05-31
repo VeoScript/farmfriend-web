@@ -1,10 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
+import emailJS from '@emailjs/browser'
 import { useGetUnverifiedAccounts } from '@/helpers/tanstack/queries/unveried-accounts'
 import { useVerifyAccountMutation } from '@/helpers/tanstack/mutations/verify-account'
 
 interface AcceptVerifyAccountModalProps {
   accountName: string
+  accountEmail: string
   userId: string
   isOpen: boolean
   onClose: (value: boolean) => void
@@ -14,6 +16,7 @@ const UnverifiedAccountsTable = () => {
 
   const [isOpenModal, setIsOpenModal] = React.useState<boolean>(false)
   const [name, setName] = React.useState<string>('')
+  const [email, setEmail] = React.useState<string>('')
   const [userId, setUserId] = React.useState<string>('')
 
   const { data: unverifiedAccounts, isLoading } = useGetUnverifiedAccounts()
@@ -36,7 +39,7 @@ const UnverifiedAccountsTable = () => {
               </tr>
             </thead>
             <tbody>
-              {unverifiedAccounts.map((farmer: { id: string, image: string, account_type: string, first_name: string, last_name: string, address: string, contact_num: string }) => (
+              {unverifiedAccounts.map((farmer: { id: string, image: string, account_type: string, first_name: string, last_name: string, address: string, email: string, contact_num: string }) => (
                 <tr key={farmer.id}>
                   <td className="border border-slate-700 w-[5rem]">
                     {farmer.image
@@ -69,6 +72,7 @@ const UnverifiedAccountsTable = () => {
                         onClick={() => {
                           setIsOpenModal(true)
                           setName(farmer.first_name + ' ' + farmer.last_name)
+                          setEmail(farmer.email)
                           setUserId(farmer.id)
                         }}
                       >
@@ -83,6 +87,7 @@ const UnverifiedAccountsTable = () => {
       }
       <AcceptVerifyAccountModal
         accountName={name}
+        accountEmail={email}
         userId={userId}
         isOpen={isOpenModal}
         onClose={setIsOpenModal}
@@ -91,7 +96,7 @@ const UnverifiedAccountsTable = () => {
   )
 }
 
-const AcceptVerifyAccountModal: React.FC<AcceptVerifyAccountModalProps> = ({ accountName, userId, isOpen, onClose }) => {
+const AcceptVerifyAccountModal: React.FC<AcceptVerifyAccountModalProps> = ({ accountName, accountEmail, userId, isOpen, onClose }) => {
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
@@ -103,9 +108,24 @@ const AcceptVerifyAccountModal: React.FC<AcceptVerifyAccountModalProps> = ({ acc
       onError: () => {
         setIsLoading(false)
       },
-      onSuccess: () => {
-        setIsLoading(false)
-        onClose(false)
+      onSuccess: async () => {
+        const to_name = accountName
+        const user_email = accountEmail
+        const message = "Your account is successfully verfied by FarmFriend Administrator. Thanks for using this app."
+
+        const mail = await emailJS.send(
+          String(process.env.EMAILJS_SERVICE_ID),
+          String(process.env.EMAILJS_TEMPLATE_ID),
+          { to_name, user_email, message },
+          String(process.env.EMAILJS_PUBLIC_KEY)
+        )
+
+        if (mail) {
+          setIsLoading(false)
+          onClose(false)
+        } else {
+          setIsLoading(false)
+        }
       }
     })
   }
