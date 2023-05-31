@@ -51,6 +51,9 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
               <Link href="/monitoring" className={`px-3 py-1 rounded-xl text-sm transition ease-in-out duration-200 ${ router.pathname === '/monitoring' ? 'bg-green-200' : 'bg-yellow-green' } hover:bg-opacity-50`}>
                 Monitoring
               </Link>
+              <Link href="/check-lgu-accounts" className={`px-3 py-1 rounded-xl text-sm transition ease-in-out duration-200 ${ router.pathname === '/check-lgu-accounts' ? 'bg-green-200' : 'bg-yellow-green' } hover:bg-opacity-50`}>
+                Unverified LGU Accounts
+              </Link>
             </>
           )}
           <button
