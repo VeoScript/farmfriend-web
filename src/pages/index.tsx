@@ -1,5 +1,6 @@
 import React from 'react'
 import nookies from 'nookies'
+import moment from 'moment'
 import Head from 'next/head'
 import Router from 'next/router'
 import Link from 'next/link'
@@ -9,6 +10,7 @@ import Loading from '@/components/Loading'
 import Error from '@/components/Error'
 import { GetServerSidePropsContext, NextPage } from 'next'
 import { useGetAccount } from '@/helpers/tanstack/queries/account'
+import { useTriggerAutomatedPushNotificationMutation } from '@/helpers/tanstack/mutations/automated-push-notification'
 
 interface IProps {
   cookies: any
@@ -18,12 +20,37 @@ const Profile: NextPage<IProps> = ({ cookies }) => {
 
   const { data: account, isLoading: isLoadingAccount, isError: isErrorAccount, error: errorAccount } = useGetAccount()
 
+  const triggerAutomatedPushNotificationMutation = useTriggerAutomatedPushNotificationMutation()
+
   // check if the user is not logged in...
   React.useEffect(() => {
     if (!cookies['farmfriend_web']) {
       Router.replace('/login')
     }
   }, [cookies])
+
+  React.useEffect(() => {
+    const defaultTimeOptions = '10:00:00'
+    const getTimeOptions = localStorage.getItem("TIME_OPTION") ?? defaultTimeOptions
+    
+    const interval = setInterval(async () => {
+      const currentTime = moment().format('HH:mm:ss')
+
+      console.log(currentTime + "==" + getTimeOptions)
+
+      if (currentTime == getTimeOptions) {
+        await triggerAutomatedPushNotificationMutation.mutateAsync({
+          currentTemp: '26',
+          currentAverageTemp: '29'
+        })
+      }
+      
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   if (isLoadingAccount) return <Loading />
   if (isErrorAccount) return <Error error={errorAccount.response?.data?.message} />

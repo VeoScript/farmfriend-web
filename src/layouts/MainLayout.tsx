@@ -54,6 +54,9 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
               <Link href="/check-lgu-accounts" className={`px-3 py-1 rounded-xl text-sm transition ease-in-out duration-200 ${ router.pathname === '/check-lgu-accounts' ? 'bg-green-200' : 'bg-yellow-green' } hover:bg-opacity-50`}>
                 LGU Account Requests
               </Link>
+              <Link href="/options" className={`px-3 py-1 rounded-xl text-sm transition ease-in-out duration-200 ${ router.pathname === '/options' ? 'bg-green-200' : 'bg-yellow-green' } hover:bg-opacity-50`}>
+                Options
+              </Link>
             </>
           )}
           <button
