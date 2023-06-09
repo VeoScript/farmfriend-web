@@ -74,7 +74,7 @@ const Options: NextPage<IProps> = ({ cookies }) => {
                   onChange={(e: React.FormEvent<HTMLSelectElement>) => setHour(e.currentTarget.value)}
                 >
                   {Array.from({ length: 24 }, (_, index) => index).map((number) => (
-                    <option key={number} value={number}>{number.toString().padStart(2, '0')}</option>
+                    <option key={number} value={number.toString().padStart(2, '0')}>{number.toString().padStart(2, '0')}</option>
                   ))}
                 </select>
               </div>
@@ -87,7 +87,7 @@ const Options: NextPage<IProps> = ({ cookies }) => {
                   onChange={(e: React.FormEvent<HTMLSelectElement>) => setMinute(e.currentTarget.value)}
                 >
                   {Array.from({ length: 60 }, (_, index) => index).map((number) => (
-                    <option key={number} value={number}>{number.toString().padStart(2, '0')}</option>
+                    <option key={number} value={number.toString().padStart(2, '0')}>{number.toString().padStart(2, '0')}</option>
                   ))}
                 </select>
               </div>
@@ -100,7 +100,7 @@ const Options: NextPage<IProps> = ({ cookies }) => {
                   onChange={(e: React.FormEvent<HTMLSelectElement>) => setSecond(e.currentTarget.value)}
                 >
                   {Array.from({ length: 60 }, (_, index) => index).map((number) => (
-                    <option key={number} value={number}>{number.toString().padStart(2, '0')}</option>
+                    <option key={number} value={number.toString().padStart(2, '0')}>{number.toString().padStart(2, '0')}</option>
                   ))}
                 </select>
               </div>

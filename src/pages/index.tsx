@@ -34,7 +34,7 @@ const Profile: NextPage<IProps> = ({ cookies }) => {
     const getTimeOptions = localStorage.getItem("TIME_OPTION") ?? defaultTimeOptions
     
     const interval = setInterval(async () => {
-      const currentTime = moment().format('H:mm:ss')
+      const currentTime = moment().format('HH:mm:ss')
 
       console.log(currentTime + "==" + getTimeOptions)
 
