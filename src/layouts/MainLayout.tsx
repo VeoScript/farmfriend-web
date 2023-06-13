@@ -1,9 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import { Toaster } from 'react-hot-toast'
 import { useLogoutMutation } from '@/helpers/tanstack/mutations/auth'
+import { useTriggerAutomatedPushNotificationMutation } from '@/helpers/tanstack/mutations/automated-push-notification'
 
 interface IProps {
   account?: any
@@ -17,10 +19,34 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
   const router = useRouter()
 
   const logoutMutation = useLogoutMutation()
+  const triggerAutomatedPushNotificationMutation = useTriggerAutomatedPushNotificationMutation()
 
   const handleLogout = async () => {
     await logoutMutation.mutateAsync()
   }
+
+  React.useEffect(() => {
+    const defaultTimeOptions = '10:00:00'
+    const getTimeOptions = localStorage.getItem("TIME_OPTION") ?? defaultTimeOptions
+    
+    const interval = setInterval(async () => {
+      const currentTime = moment().format('HH:mm:ss')
+
+      console.log(currentTime + "==" + getTimeOptions)
+
+      if (currentTime == getTimeOptions) {
+        await triggerAutomatedPushNotificationMutation.mutateAsync({
+          currentTemp: '26',
+          currentAverageTemp: '29'
+        })
+      }
+      
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div className="relative flex flex-col w-full h-full md:h-screen overflow-y-auto md:overflow-hidden font-poppins">
