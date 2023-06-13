@@ -10,6 +10,7 @@ export default withIronSessionApiRoute(
         name: true,
         description: true,
         temperature: true,
+        max_temperature: true,
         created_at: true,
         updated_at: true
       }
