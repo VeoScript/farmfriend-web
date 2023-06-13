@@ -18,11 +18,12 @@ const CropsTable = () => {
                 <th className="border-b border-x border-slate-600 p-3">Image</th>
                 <th className="border-b border-x border-slate-600 p-3">Name</th>
                 <th className="border-b border-x border-slate-600 p-3">Temperature</th>
+                <th className="border-b border-x border-slate-600 p-3">Maximum Temperature</th>
                 <th className="border-b border-x border-slate-600 p-3">Description</th>
               </tr>
             </thead>
             <tbody>
-              {crops.map((crop: { id: string, image: string, name: string, temperature: string, description: string }) => (
+              {crops.map((crop: { id: string, image: string, name: string, temperature: string, max_temperature: string, description: string }) => (
                 <tr key={crop.id}>
                   <td className="border border-slate-700 w-[5rem]">
                     <Image
@@ -38,6 +39,7 @@ const CropsTable = () => {
                   </td>
                   <td className="border border-slate-700 p-3">{ crop.name }</td>
                   <td className="border border-slate-700 p-3">{ crop.temperature }</td>
+                  <td className="border border-slate-700 p-3">{ crop.max_temperature }</td>
                   <td className="border border-slate-700 p-3">{ crop.description }</td>
                 </tr>
               ))}

@@ -17,7 +17,7 @@ const RatesTable = () => {
               <tr>
                 <th className="border-b border-x border-slate-600 p-3">Image</th>
                 <th className="border-b border-x border-slate-600 p-3">Name</th>
-                <th className="border-b border-x border-slate-600 p-3">Address</th>
+                <th className="border-b border-x border-slate-600 p-3">Account Type</th>
                 <th className="border-b border-x border-slate-600 p-3">Contact No.</th>
               </tr>
             </thead>
