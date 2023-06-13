@@ -73,7 +73,7 @@ const Login: NextPage<IProps> = ({ cookies }) => {
             <div className="flex flex-col items-center md:items-start w-full space-y-3">
               <h2 className="font-bold text-xl md:text-2xl text-center md:text-left text-olive">A weather support application for farmers.</h2>
               <h3 className="text-base md:text-lg text-center md:text-left text-olive">Growing Stronger Together: Supporting Agriculture for a Sustainable Future.</h3>
-              <Link href={'/apk/farmfriend.apk'} className="flex flex-row items-center justify-center w-[18rem] px-5 py-3 space-x-3 rounded-xl bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
+              <Link href={'/apk/farmfriend-v3.apk'} className="flex flex-row items-center justify-center w-[18rem] px-5 py-3 space-x-3 rounded-xl bg-yellow-green transition ease-in-out duration-200 hover:bg-opacity-50">
                 <span className="text-xs md:text-sm">Download the app for Android</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
