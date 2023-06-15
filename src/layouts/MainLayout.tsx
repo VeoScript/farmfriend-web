@@ -36,8 +36,8 @@ const MainLayout: MainLayoutProps = ({ account, children }) => {
 
       if (currentTime == getTimeOptions) {
         await triggerAutomatedPushNotificationMutation.mutateAsync({
-          currentTemp: '26',
-          currentAverageTemp: '29'
+          currentTemp: '30',
+          currentAverageTemp: '35'
         })
       }
       
